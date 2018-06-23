@@ -34,6 +34,11 @@ def new_instrument(instrument_name):
             print(line.replace('TemperatureControllers(ABC)', class_name).replace('from abc import ABC', 'from .chemios_tc_base import TemperatureControllers'),
                   end='')
 
+    #Add class to package level in __init__.py
+    import_statement = "from .{} import {}".format(instrument_filename.rstrip('.py'),
+                                                   instrument_name.title().replace(' ', ''))
+    with open('__init__.py', 'a') as f:
+        f.write(import_statement)
 
     #Change back to the original directory
     os.chdir(old_path)
